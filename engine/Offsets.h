@@ -5,7 +5,7 @@
 
 #pragma once
 
-#define ADDRESS_GAMEMANAGER 0x435B1B0 // Game->
+#define ADDRESS_GAMEMANAGER 0x5E00F28 // Game->
 #define ADDRESS_GAMERENDERER 0x4330E28 // Game->
 
 #define OFFSET_GAMERENDERER_ENGINE 0x20 // GameRenderer->
@@ -18,7 +18,7 @@
 #define OFFSET_CAMERA_VIEWFOVX 0x5A0 // Camera->
 #define OFFSET_CAMERA_VIEWFOVY 0x5B4 // Camera->
 
-#define OFFSET_GAMEMANAGER_ENTITYLIST 0xB8 // GameManager->
+#define OFFSET_GAMEMANAGER_ENTITYLIST 0xE0 // GameManager->
 
-#define OFFSET_ENTITY_POSITION 0x190 // Entity->
-#define OFFSET_ENTITY_HEADPOSITION 0x130 // Entity->
+#define OFFSET_ENTITY_POSITION 0x1100 // Entity->
+#define OFFSET_ENTITY_HEADPOSITION 0x1070 // Entity->
