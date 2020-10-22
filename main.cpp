@@ -4,7 +4,9 @@
 auto pGameManager = Engine::GameManager::GetInstance();
 auto pCamera = Engine::GameRenderer::GetInstance()->GetCamera();
 
-printf(pGameManager->GetEntities().GetSize());
+auto size = pGameManager->GetEntities().GetSize();
+
+printf((char)size);
 
 /*
 for (uint64_t i = 0; i < pGameManager->GetEntities().GetSize(); i++)
