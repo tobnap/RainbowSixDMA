@@ -11,13 +11,13 @@ namespace Engine
 {
 	Array<Entity*> GameManager::GetEntities()
 	{
-		return *Memory::Ptr<Array<Entity*>*>(this, OFFSET_GAMEMANAGER_ENTITYLIST);
+		return (Array<Entity*>*)proc.Read<uint64_t>(this + OFFSET_GAMEMANAGER_ENTITYLIST);
 	}
 
 	GameManager* GameManager::GetInstance()
 	{
 		PEB peb = proc.GetPeb();
 		uint64_t base = peb.ImageBaseAddress;
-		return *reinterpret_cast<GameManager**>(base, ADDRESS_GAMEMANAGER);
+		return proc.Read<uint64_t>(base + ADDRESS_GAMEMANAGER);
 	}
 }
