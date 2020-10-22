@@ -26,10 +26,7 @@ namespace Engine
 
 			const T& operator [](uint64_t i)
 			{
-				if (Memory::IsValidPtr<T>(m_pBuffer))
-					return m_pBuffer[i];
-
-				return nullptr;
+				return m_pBuffer[i];
 			}
     };
 }
