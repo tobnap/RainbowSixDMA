@@ -3,8 +3,6 @@
  * Copyright (C) 2017 RangeMachine
  */
 
-#include <windows.h>
-
 #include "GameManager.h"
 #include "Offsets.h"
 #include "Memory.h"

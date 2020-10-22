@@ -1,12 +1,15 @@
 #include "engine/GameManager.h"
-#include "engine/GameRenderer.h"
+//#include "engine/GameRenderer.h"
+
+#include <iostream>
  
 auto pGameManager = Engine::GameManager::GetInstance();
-auto pCamera = Engine::GameRenderer::GetInstance()->GetCamera();
+//auto pCamera = Engine::GameRenderer::GetInstance()->GetCamera();
 
-auto size = pGameManager->GetEntities().GetSize();
-
-printf((char)size);
+int main() {
+	std::cout << pGameManager->GetEntities().GetSize();
+	return 1;
+}
 
 /*
 for (uint64_t i = 0; i < pGameManager->GetEntities().GetSize(); i++)

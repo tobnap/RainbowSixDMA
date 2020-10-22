@@ -42,10 +42,11 @@ thread = meson.get_compiler('c').find_library('pthread', required : false)
 
 base_files = ['vmread/mem.c', 'vmread/wintools.c', 'vmread/pmparser.c']
 hlapi_files = ['vmread/hlapi/windll.cpp', 'vmread/hlapi/winprocess.cpp', 'vmread/hlapi/winprocesslist.cpp']
+engine_files = ['engine/GameManager.cpp']
 
 r6_dma = executable(
 	'r6_dma',
-	files(base_files + ['main.cpp', 'vmread/vmmem.c'] + hlapi_files),
+	files(base_files + ['main.cpp', 'vmread/vmmem.c'] + engine_files + hlapi_files),
   c_args : c_compile_args + compile_args + compile_args_external,
   cpp_args : cpp_compile_args + compile_args + compile_args_external,
   link_args : compile_args + compile_args_external + link_args + link_args_external
