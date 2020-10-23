@@ -54,7 +54,7 @@ r6_dma = executable(
 
 r6_dma_kmod = executable(
 	'kmod_r6_dma',
-	files(base_files + ['main.cpp', 'vmread/intmem.c'] + hlapi_files),
+	files(base_files + ['main.cpp', 'vmread/intmem.c'] + engine_files + hlapi_files),
   c_args : c_compile_args + compile_args + compile_args_external + ['-DKMOD_MEMMAP'],
   cpp_args : cpp_compile_args + compile_args + compile_args_external + ['-DKMOD_MEMMAP'],
   link_args : compile_args + compile_args_external + link_args + link_args_external
@@ -62,7 +62,7 @@ r6_dma_kmod = executable(
 
 r6_dma_lib = shared_library(
 	'r6_dma',
-	files(base_files + ['main.cpp', 'vmread/intmem.c'] + hlapi_files),
+	files(base_files + ['main.cpp', 'vmread/intmem.c'] + engine_files + hlapi_files),
   c_args : compile_args + compile_args_internal,
   cpp_args : compile_args + compile_args_internal,
   link_args : compile_args + compile_args_internal + link_args + link_args_internal,

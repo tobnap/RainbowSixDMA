@@ -1,27 +1,61 @@
+#include "engine/Memory.h"
 #include "engine/GameManager.h"
-//#include "engine/GameRenderer.h"
 
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <string.h>
+#include <random>
+#include <thread>
 #include <iostream>
- 
-auto pGameManager = Engine::GameManager::GetInstance();
-//auto pCamera = Engine::GameRenderer::GetInstance()->GetCamera();
+#include <chrono>
 
-int main() {
-	std::cout << pGameManager->GetEntities().GetSize();
-	return 1;
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
+
+void read_loop(WinProcess &proc) {
+	auto pGameManager = Engine::GameManager::GetInstance(proc);
+	
+	std::cout << pGameManager->GetEntities(proc).GetSize();
 }
 
-/*
-for (uint64_t i = 0; i < pGameManager->GetEntities().GetSize(); i++)
+__attribute__((constructor))
+static void init() 
 {
-	Engine::Entity* pEntity = pGameManager->GetEntities()[i];
-	printf(pEntity->GetPosition());
-	Engine::Vector3 screenPosition = pCamera->WorldToScreen(pEntity->GetPosition());
-	float distance = pCamera->GetViewTranslation().Distance(pEntity->GetPosition());
+	pid_t pid = 0;
+#if (LMODE() != MODE_EXTERNAL())
+	pid = getpid();
+#endif
+	printf("Using Mode: %s\n", TOSTRING(LMODE));
 
-	if (screenPosition.z >= 1.0f)
-	{
-		printf("test");
+	try {
+		bool not_found = true;
+		WinContext ctx(pid);
+
+		printf("Searching for a process...\n");
+		while (not_found) {
+			for (auto &i : ctx.processList) {
+				if (!strcasecmp("RainbowSix.exe", i.proc.name)) {
+					printf("\nLooping process %lx:\t%s\n", i.proc.pid, i.proc.name);
+
+					PEB peb = i.GetPeb();
+					short magic = i.Read<short>(peb.ImageBaseAddress);
+					printf("\tBase:\t%lx\tMagic:\t%hx (valid: %hhx)\n", peb.ImageBaseAddress, magic, (char)(magic == IMAGE_DOS_SIGNATURE));
+
+					read_loop(i);
+
+					not_found = false;
+					break;
+				}
+			}
+			std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		} 
+	} catch (VMException& e) {
+		printf("Initialization error: %d\n", e.value);
 	}
 }
-*/
+
+int main() {
+	return 0;
+}

@@ -13,8 +13,8 @@ namespace Engine
 	class GameManager
 	{
 		public:
-			Array<Entity*> GetEntities();
+			Array<Entity*> GetEntities(WinProcess &proc);
 
-			static GameManager* GetInstance();
+			static GameManager* GetInstance(WinProcess &proc);
 	};
 }
