@@ -9,22 +9,22 @@
 
 namespace Engine
 {
-	uintptr_t GetEntityInfo(WinProcess &proc)
+	EntityInfo* Entity::GetEntityInfo(WinProcess &proc)
 	{
 		uintptr_t info = proc.Read<uintptr_t>((uintptr_t)this + 0x50);
 		info ^= 0x59089C3C53641909;
 		info += 0x3E48F409BF6F5A50;
 		info ^= 0x155D2A1FBD952158;
 
-		return info;
+		return (EntityInfo*)info;
 	}
 
-	Vector3 Entity::GetPosition(WinProcess &proc)
+	Vector3 EntityInfo::GetPosition(WinProcess &proc)
 	{
 		return proc.Read<Vector3>((uintptr_t)this + OFFSET_ENTITY_POSITION);
 	}
 
-	Vector3 Entity::GetHeadPosition(WinProcess &proc)
+	Vector3 EntityInfo::GetHeadPosition(WinProcess &proc)
 	{
 		return proc.Read<Vector3>((uintptr_t)this + OFFSET_ENTITY_HEADPOSITION);
 	}
