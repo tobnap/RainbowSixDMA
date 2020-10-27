@@ -1,5 +1,6 @@
 #include "engine/Memory.h"
 #include "engine/GameManager.h"
+#include "engine/Offsets.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -15,9 +16,15 @@
 #define TOSTRING(x) STRINGIFY(x)
 
 void read_loop(WinProcess &proc) {
-	auto pGameManager = Engine::GameManager::GetInstance(proc);
-	
-	std::cout << pGameManager->GetEntities(proc).GetSize();
+	Engine::GameManager* pGameManager = Engine::GameManager::GetInstance(proc);
+
+	for (uint16_t i = 0; i < pGameManager->GetEntityCount(proc); i++)
+	{
+		Engine::Entity* pEntity = pGameManager->GetEntityList(proc) + (0x8 * i);
+		printf("X pos: %6.2lf\n", pEntity->GetPosition(proc).x);
+		//Engine::Vector3 screenPosition = pCamera->WorldToScreen(pEntity->GetPosition());
+		//float distance = pCamera->GetViewTranslation().Distance(pEntity->GetPosition());
+	}
 }
 
 __attribute__((constructor))
@@ -37,16 +44,21 @@ static void init()
 		while (not_found) {
 			for (auto &i : ctx.processList) {
 				if (!strcasecmp("RainbowSix.exe", i.proc.name)) {
-					printf("\nLooping process %lx:\t%s\n", i.proc.pid, i.proc.name);
-
 					PEB peb = i.GetPeb();
 					short magic = i.Read<short>(peb.ImageBaseAddress);
-					printf("\tBase:\t%lx\tMagic:\t%hx (valid: %hhx)\n", peb.ImageBaseAddress, magic, (char)(magic == IMAGE_DOS_SIGNATURE));
+					auto g_base = peb.ImageBaseAddress;
+					if (g_base != 0)
+					{
+						printf("\nR6 found %lx:\t%s\n", i.proc.pid, i.proc.name);
+						printf("\tBase:\t%lx\tMagic:\t%hx (valid: %hhx)\n", peb.ImageBaseAddress, magic, (char)(magic == IMAGE_DOS_SIGNATURE));
 
-					read_loop(i);
+						read_loop(i);
+						//std::thread read_thread(read_loop, std::ref(i));
+						//read_thread.detach();
 
-					not_found = false;
-					break;
+						not_found = false;
+						break;
+					}
 				}
 			}
 			std::this_thread::sleep_for(std::chrono::milliseconds(1));

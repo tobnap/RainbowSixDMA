@@ -9,13 +9,13 @@
 
 namespace Engine
 {
-	Vector3& Entity::GetPosition()
+	Vector3 Entity::GetPosition(WinProcess &proc)
 	{
-		return *Memory::Ptr<Vector3*>(this, OFFSET_ENTITY_POSITION);
+		return proc.Read<Vector3>((uintptr_t)this + OFFSET_ENTITY_POSITION);
 	}
 
-	Vector3& Entity::GetHeadPosition()
+	Vector3 Entity::GetHeadPosition(WinProcess &proc)
 	{
-		return *Memory::Ptr<Vector3*>(this, OFFSET_ENTITY_HEADPOSITION);
+		return proc.Read<Vector3>((uintptr_t)this + OFFSET_ENTITY_HEADPOSITION);
 	}
 }

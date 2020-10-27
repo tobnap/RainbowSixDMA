@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "Array.h"
+#include "Memory.h"
 #include "Entity.h"
 
 namespace Engine
@@ -13,8 +13,8 @@ namespace Engine
 	class GameManager
 	{
 		public:
-			Array<Entity*> GetEntities(WinProcess &proc);
-
+			Entity* GetEntityList(WinProcess &proc);
+			uint16_t GetEntityCount(WinProcess &proc);
 			static GameManager* GetInstance(WinProcess &proc);
 	};
 }
