@@ -13,6 +13,7 @@ namespace Engine
 	class Entity
 	{
 		public:
+			uintptr_t GetEntityInfo(WinProcess &proc);
 			Vector3 GetPosition(WinProcess &proc);
 			Vector3 GetHeadPosition(WinProcess &proc);
     };

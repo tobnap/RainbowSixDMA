@@ -21,7 +21,8 @@ void read_loop(WinProcess &proc) {
 	for (uint16_t i = 0; i < pGameManager->GetEntityCount(proc); i++)
 	{
 		Engine::Entity* pEntity = pGameManager->GetEntityList(proc) + (0x8 * i);
-		printf("X pos: %6.2lf\n", pEntity->GetPosition(proc).x);
+		uintptr_t* pEntityInfo = pEntity->GetEntityInfo(proc);
+		printf("X pos: %6.2lf\n", pEntityInfo->GetPosition(proc).x);
 		//Engine::Vector3 screenPosition = pCamera->WorldToScreen(pEntity->GetPosition());
 		//float distance = pCamera->GetViewTranslation().Distance(pEntity->GetPosition());
 	}
