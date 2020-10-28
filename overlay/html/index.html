@@ -6,13 +6,20 @@
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 </head>
 <body>
+<div id="result"></div>
+
+<canvas id="canvas" width="200" height="200"
+style="border:1px solid #d3d3d3;">
+Your browser does not support the canvas element.
+</canvas>
+
 <script>
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 function queryData() {
     $.post("/get-coords", function( data ) {
-        $("div#result").html("X: " + data.x + "\nY: " + data.y + "\nZ: " + data.z);
+        //$("div#result").html("X: " + data.x + "\nY: " + data.y + "\nZ: " + data.z);
         
 		ctx.beginPath();
 		ctx.arc(data.x,data.z,2,0,2*Math.PI);
@@ -26,12 +33,4 @@ $(document).ready(function() {
     queryData();
 });
 </script>
-
-<div id="result"></div>
-
-<canvas id="canvas" width="200" height="200"
-style="border:1px solid #d3d3d3;">
-Your browser does not support the canvas element.
-</canvas>
-
 </body>
