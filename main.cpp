@@ -19,14 +19,19 @@ void read_loop(WinProcess &proc) {
 	Engine::GameManager* pGameManager = Engine::GameManager::GetInstance(proc);
 	Engine::Entity* pEntityList = pGameManager->GetEntityList(proc);
 
-	for (uint16_t i = 0; i < pGameManager->GetEntityCount(proc); i++)
-	{
-		Engine::Entity* pEntity = (Engine::Entity*)proc.Read<uintptr_t>((uintptr_t)pEntityList + (0x8 * i));
-		Engine::EntityInfo* pEntityInfo = pEntity->GetEntityInfo(proc);
-		Engine::Vector3 entityPos = pEntityInfo->GetPosition(proc);
-		printf("%f\n", entityPos.x);
-		//Engine::Vector3 screenPosition = pCamera->WorldToScreen(pEntity->GetPosition());
-		//float distance = pCamera->GetViewTranslation().Distance(pEntity->GetPosition());
+	while(true) {
+		for (uint16_t i = 0; i < pGameManager->GetEntityCount(proc); i++)
+		{
+			Engine::Entity* pEntity = (Engine::Entity*)proc.Read<uintptr_t>((uintptr_t)pEntityList + (0x8 * i));
+			Engine::EntityInfo* pEntityInfo = pEntity->GetEntityInfo(proc);
+			Engine::Vector3 entityPos = pEntityInfo->GetPosition(proc);
+
+			system((std::string("curl -d \"x=") + std::to_string(entityPos.x) + std::string("&y=") + std::to_string(entityPos.y) + std::string("&z=") + std::to_string(entityPos.z) + std::string("\" -X POST localhost/send-coords")).c_str());
+
+			//printf("%f\n", entityPos.x);
+			//Engine::Vector3 screenPosition = pCamera->WorldToScreen(pEntity->GetPosition());
+			//float distance = pCamera->GetViewTranslation().Distance(pEntity->GetPosition());
+		}
 	}
 }
 
