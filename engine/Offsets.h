@@ -1,12 +1,12 @@
 #pragma once
 
 #define ADDRESS_GAMEMANAGER 0x5E00F28 // Game->
-#define ADDRESS_PROFILEMANAGER 0x4330E28 // Game->
+#define ADDRESS_GAMERENDERER 0x4330E28 // Game->
 
 
-#define OFFSET_PROFILEMANAGER_LOCAL_CAMERA 0x88 // ProfileManager->
-#define OFFSET_PROFILEMANAGER_ENGINE_CAMERA 0x220 // ProfileManager->LocalCamera->
-#define OFFSET_PROFILEMANAGER_CAMERAMANAGER 0x410 // ProfileManager->LocalCamera->Engine->
+#define OFFSET_GAMERENDERER_ENGINELINK 0x88 // GameRenderer->
+#define OFFSET_ENGINELINK_ENGINE 0x220 // GameRenderer->EngineLink->
+#define OFFSET_ENGINE_CAMERA 0x410 // GameRenderer->EngineLink->Engine->
 
 #define OFFSET_CAMERA_VIEWRIGHT 0x7A0 // Camera->
 #define OFFSET_CAMERA_VIEWUP 0x7B0 // Camera->
