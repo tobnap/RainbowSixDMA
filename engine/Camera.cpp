@@ -33,7 +33,7 @@ namespace Engine
 		return proc.Read<float>((uintptr_t)this + OFFSET_CAMERA_VIEWFOVY);
 	}
 
-	Vector3 Camera::WorldToScreen(WinProcess &proc, Vector3& position)
+	Vector3 Camera::WorldToScreen(WinProcess &proc, Vector3 position)
 	{
 		Vector3 temp = position - GetViewTranslation(proc);
 

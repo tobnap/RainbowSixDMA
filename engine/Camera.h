@@ -15,6 +15,6 @@ namespace Engine
 			float GetViewFovX(WinProcess &proc);
 			float GetViewFovY(WinProcess &proc);
 
-			Vector3 WorldToScreen(WinProcess &proc, Vector3& position);
+			Vector3 WorldToScreen(WinProcess &proc, Vector3 position);
 	};
 }
