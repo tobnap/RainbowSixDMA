@@ -174,3 +174,6 @@ dist
 .vscode-test
 
 # End of https://www.toptal.com/developers/gitignore/api/node,c++,meson,ninja
+
+# Build files
+build/
