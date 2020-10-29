@@ -6,7 +6,6 @@
 #pragma once
 
 #include "Vector3.h"
-#include "Memory.h"
 
 namespace Engine
 {
