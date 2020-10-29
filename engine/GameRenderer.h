@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Camera.h"
+#include "Memory.h"
 
 namespace Engine
 {
