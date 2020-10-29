@@ -22,7 +22,7 @@ function queryData() {
         //$("div#result").html("X: " + data.x + "\nY: " + data.y + "\nZ: " + data.z);
         
 		ctx.beginPath();
-		ctx.arc(data.x,data.z,2,0,2*Math.PI);
+		ctx.arc(10*data.x,10*data.z,2,0,2*Math.PI);
 		ctx.stroke();
 		
         queryData();
