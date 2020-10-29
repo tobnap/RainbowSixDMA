@@ -1,8 +1,3 @@
-/**
- * Rainbow Six: Siege SDK
- * Copyright (C) 2017 RangeMachine
- */
-
 #include "GameManager.h"
 #include "Offsets.h"
 #include "Memory.h"

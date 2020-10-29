@@ -50,18 +50,18 @@ static void init()
 
 		printf("Searching for a process...\n");
 		while (not_found) {
-			for (auto &i : ctx.processList) {
-				if (!strcasecmp("RainbowSix.exe", i.proc.name)) {
-					PEB peb = i.GetPeb();
-					short magic = i.Read<short>(peb.ImageBaseAddress);
+			for (auto &proc : ctx.processList) {
+				if (!strcasecmp("RainbowSix.exe", proc.proc.name)) {
+					PEB peb = proc.GetPeb();
+					short magic = proc.Read<short>(peb.ImageBaseAddress);
 					auto g_base = peb.ImageBaseAddress;
 					if (g_base != 0)
 					{
-						printf("\nR6 found %lx:\t%s\n", i.proc.pid, i.proc.name);
+						printf("\nR6 found %lx:\t%s\n", proc.proc.pid, proc.proc.name);
 						printf("\tBase:\t%lx\tMagic:\t%hx (valid: %hhx)\n", peb.ImageBaseAddress, magic, (char)(magic == IMAGE_DOS_SIGNATURE));
 
-						read_loop(i);
-						//std::thread read_thread(read_loop, std::ref(i));
+						read_loop(proc);
+						//std::thread read_thread(read_loop, std::ref(proc));
 						//read_thread.detach();
 
 						not_found = false;

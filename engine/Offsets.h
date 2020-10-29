@@ -1,8 +1,3 @@
-/**
- * Rainbow Six: Siege SDK
- * Copyright (C) 2017 RangeMachine
- */
-
 #pragma once
 
 #define ADDRESS_GAMEMANAGER 0x5E00F28 // Game->

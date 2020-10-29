@@ -1,8 +1,3 @@
-/**
- * Rainbow Six: Siege SDK
- * Copyright (C) 2017 RangeMachine
- */
-
 #include "Vector3.h"
 
 namespace Engine
