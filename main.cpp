@@ -37,6 +37,7 @@ void read_loop(WinProcess &proc) {
 			if (screenPosition.z >= 1.0f)
 			{
 				printf("X: %f", screenPosition.x);
+				printf("Distance: %f", distance);
 			}
 		}
 	}

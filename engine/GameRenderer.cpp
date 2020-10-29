@@ -6,7 +6,7 @@ namespace Engine
 	Camera* GameRenderer::GetCamera(WinProcess &proc)
 	{
 		uintptr_t pEngineLink = proc.Read<uintptr_t>((uintptr_t)this + OFFSET_GAMERENDERER_ENGINELINK);
-		uintptr_t pEngineLink = proc.Read<uintptr_t>(pEngineLink);
+		pEngineLink = proc.Read<uintptr_t>(pEngineLink);
 		uintptr_t pEngine = proc.Read<uintptr_t>(pEngineLink + OFFSET_ENGINELINK_ENGINE);
 		return (Camera*)proc.Read<uintptr_t>(pEngine + OFFSET_ENGINE_CAMERA);
 	}
