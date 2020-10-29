@@ -31,8 +31,8 @@ void read_loop(WinProcess &proc) {
 
 			system((std::string("curl -d \"x=") + std::to_string(entityPos.x) + std::string("&y=") + std::to_string(entityPos.y) + std::string("&z=") + std::to_string(entityPos.z) + std::string("\" -X POST localhost/send-coords")).c_str());
 
-			Engine::Vector3 screenPosition = pCamera->WorldToScreen(proc, pEntity->GetPosition(proc));
-			float distance = pCamera->GetViewTranslation(proc).Distance(pEntity->GetPosition(proc));	
+			Engine::Vector3 screenPosition = pCamera->WorldToScreen(proc, pEntityInfo->GetPosition(proc));
+			float distance = pCamera->GetViewTranslation(proc).Distance(pEntityInfo->GetPosition(proc));	
 			
 			if (screenPosition.z >= 1.0f)
 			{
