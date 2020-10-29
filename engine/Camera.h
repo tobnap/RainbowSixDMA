@@ -7,13 +7,13 @@ namespace Engine
 	class Camera
 	{
 		public:
-			Vector3& GetViewRight();
-			Vector3& GetViewUp();
-			Vector3& GetViewForward();
-			Vector3& GetViewTranslation();
-			float GetViewFovX();
-			float GetViewFovY();
+			Vector3 GetViewRight(WinProcess &proc);
+			Vector3 GetViewUp(WinProcess &proc);
+			Vector3 GetViewForward(WinProcess &proc);
+			Vector3 GetViewTranslation(WinProcess &proc);
+			float GetViewFovX(WinProcess &proc);
+			float GetViewFovY(WinProcess &proc);
 
-			Vector3 WorldToScreen(Vector3& position);
+			Vector3 WorldToScreen(WinProcess &proc, Vector3& position);
 	};
 }

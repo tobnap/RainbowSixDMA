@@ -7,7 +7,7 @@ namespace Engine
 	class GameRenderer
 	{
 		public:
-			Camera* GetCamera();
-			static GameRenderer* GetInstance();
+			Camera* GetCamera(WinProcess &proc);
+			static GameRenderer* GetInstance(WinProcess &proc);
 	};
 }

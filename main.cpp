@@ -1,5 +1,6 @@
 #include "engine/Memory.h"
 #include "engine/GameManager.h"
+#include "engine/GameRenderer.h"
 #include "engine/Offsets.h"
 
 #include <stdio.h>
@@ -17,20 +18,26 @@
 
 void read_loop(WinProcess &proc) {
 	Engine::GameManager* pGameManager = Engine::GameManager::GetInstance(proc);
+	Engine::Camera* pCamera = Engine::GameRenderer::GetInstance(proc)->GetCamera(proc);
+	
 	Engine::Entity* pEntityList = pGameManager->GetEntityList(proc);
 
 	while(true) {
 		for (uint16_t i = 0; i < pGameManager->GetEntityCount(proc); i++)
 		{
-			Engine::Entity* pEntity = (Engine::Entity*)proc.Read<uintptr_t>((uintptr_t)pEntityList + (0x8 * i));
+			Engine::Entity* pEntity = (Engine::Entity*)proc.Read<uintptr_t>((uintptr_t)pEntityList + (OFFSET_GAMEMANAGER_ENTITY_INDEX * i));
 			Engine::EntityInfo* pEntityInfo = pEntity->GetEntityInfo(proc);
 			Engine::Vector3 entityPos = pEntityInfo->GetPosition(proc);
 
 			system((std::string("curl -d \"x=") + std::to_string(entityPos.x) + std::string("&y=") + std::to_string(entityPos.y) + std::string("&z=") + std::to_string(entityPos.z) + std::string("\" -X POST localhost/send-coords")).c_str());
 
-			//printf("%f\n", entityPos.x);
-			//Engine::Vector3 screenPosition = pCamera->WorldToScreen(pEntity->GetPosition());
-			//float distance = pCamera->GetViewTranslation().Distance(pEntity->GetPosition());
+			Engine::Vector3 screenPosition = pCamera->WorldToScreen(proc, pEntity->GetPosition(proc));
+			float distance = pCamera->GetViewTranslation(proc).Distance(pEntity->GetPosition(proc));	
+			
+			if (screenPosition.z >= 1.0f)
+			{
+				printf("X: %f", screenPosition.x);
+			}
 		}
 	}
 }

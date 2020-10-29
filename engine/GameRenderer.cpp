@@ -4,16 +4,20 @@
 
 namespace Engine
 {
-	Camera* GameRenderer::GetCamera()
+	Camera* GameRenderer::GetCamera(WinProcess &proc)
 	{
-		auto pEngine = *Memory::Ptr<void**>(this, OFFSET_GAMERENDERER_ENGINE);
-		return *Memory::Ptr<Camera**>(pEngine, OFFSET_GAMERENDERER_ENGINE_CAMERA);
+		uintptr_t pEngine = proc.Read<uintptr_t>((uintptr_t)this + OFFSET_PROFILEMANAGER_LOCAL_CAMERA);
+		uintptr_t pCamera = proc.Read<uintptr_t>(pEngine);
+		pCamera = proc.Read<uintptr_t>(pEngine + OFFSET_PROFILEMANAGER_ENGINE_CAMERA);
+		pCamera = proc.Read<uintptr_t>(pEngine + OFFSET_PROFILEMANAGER_CAMERAMANAGER);
+		
+		return (Camera*)pCamera;
 	}
 
-	GameRenderer* GameRenderer::GetInstance()
+	GameRenderer* GameRenderer::GetInstance(WinProcess &proc)
 	{
 		PEB peb = proc.GetPeb();
-		uint64_t base = peb.ImageBaseAddress;
+		uintptr_t base = peb.ImageBaseAddress;
 		return *reinterpret_cast<GameRenderer**>(base, ADDRESS_GAMERENDERER);
 	}
 }

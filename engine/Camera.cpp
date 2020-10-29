@@ -4,47 +4,47 @@
 
 namespace Engine
 {
-	Vector3 Camera::GetViewRight()
+	Vector3 Camera::GetViewRight(WinProcess &proc)
 	{
 		return proc.Read<Vector3>((uintptr_t)this + OFFSET_CAMERA_VIEWRIGHT);
 	}
 
-	Vector3 Camera::GetViewUp()
+	Vector3 Camera::GetViewUp(WinProcess &proc)
 	{
 		return proc.Read<Vector3>((uintptr_t)this + OFFSET_CAMERA_VIEWUP);
 	}
 
-	Vector3 Camera::GetViewForward()
+	Vector3 Camera::GetViewForward(WinProcess &proc)
 	{
 		return proc.Read<Vector3>((uintptr_t)this + OFFSET_CAMERA_VIEFORWARD);
 	}
 
-	Vector3 Camera::GetViewTranslation()
+	Vector3 Camera::GetViewTranslation(WinProcess &proc)
 	{
 		return proc.Read<Vector3>((uintptr_t)this + OFFSET_CAMERA_VIEWTRANSLATION);
 	}
 
-	float Camera::GetViewFovX()
+	float Camera::GetViewFovX(WinProcess &proc)
 	{
 		return proc.Read<float>((uintptr_t)this + OFFSET_CAMERA_VIEWFOVX);
 	}
 
-	float Camera::GetViewFovY()
+	float Camera::GetViewFovY(WinProcess &proc)
 	{
 		return proc.Read<float>((uintptr_t)this + OFFSET_CAMERA_VIEWFOVY);
 	}
 
-	Vector3 Camera::WorldToScreen(Vector3& position)
+	Vector3 Camera::WorldToScreen(WinProcess &proc, Vector3& position)
 	{
-		Vector3 temp = position - GetViewTranslation();
+		Vector3 temp = position - GetViewTranslation(proc);
 
-		float x = temp.Dot(GetViewRight());
-		float y = temp.Dot(GetViewUp());
-		float z = temp.Dot(GetViewForward() * -1);
+		float x = temp.Dot(GetViewRight(proc));
+		float y = temp.Dot(GetViewUp(proc));
+		float z = temp.Dot(GetViewForward(proc) * -1);
 
 		return *(new Vector3(
-			(2560 / 2) * (1 + x / GetViewFovX() / z),
-			(1440 / 2) * (1 - y / GetViewFovY() / z),
+			(2560 / 2) * (1 + x / GetViewFovX(proc) / z),
+			(1440 / 2) * (1 - y / GetViewFovY(proc) / z),
 			z));
 	}
 }
